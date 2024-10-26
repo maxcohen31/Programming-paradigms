@@ -1,1 +1,1 @@
-## Script from Programming paradigms at UniPi
+## Scripts from Programming paradigms at UniPi
