@@ -112,13 +112,32 @@ let parse s =
     (* Factor ::= n | ( Exp ) *)
     and factor () =
         match lookahead() with
-        | Tkn_NUM n -> consume(); Val n
+        | Tkn_NUM n -> consume(); Val 
         | Tkn_LPAR -> consume(); let e = exp() in
         (match lookahead() with
         | Tkn_RPAR -> consume(); e
         | _ -> raise (ParseError ("Parser","RPAR error"))
         )
-        | _ -> raise (ParseError ("Parser","NUM/LPAR error"))
+        | _ -> raise (ParseError ("Parser","NUM/LPAR error")) ;;
 
 (* utilizzo *)
-let ast = parse "32 + 24 * 12 * (3-1) +2" ;;
+(*let ast = parse "32 + 24 * 12 * (3-1) +2" ;;*)
+
+(* interprete con semantica big step *)
+let rec eval e = 
+    match e with
+    | Val n -> Val N
+    | (op, e1, e2) -> 
+            match (eval e1, eval e2) with
+            | (Val n1, Val n2) -> (match op with 
+                                   | Add -> Val (n1+n2) 
+                                   | Sub -> Val (n1-n2)
+                                   | Mul -> Val (n1*n2)
+                                   | Div -> Val (n1/n2)
+                                    )
+            _ -> failwith "Errore: impossibile che si verifichi" ;;
+
+
+
+
+
