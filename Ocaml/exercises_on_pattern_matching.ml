@@ -97,6 +97,26 @@ let rec crea_multiset lis =
                let res = (x, c+1) :: crea_multiset r in
                if multisetp res then res else failwith "Error: duplicate element" ;;
     
-crea_multiset [10; 6; 3; 6; 4; 5; 4; 5; 5] ;;
+let  parentesi_bilanciate lis =
+    let rec aux l acc = 
+        match l with
+        | [] -> acc = 0
+        | '('::l' -> aux l' (acc + 1)
+        | ')'::l' -> if acc = 0 then false else aux l' (acc - 1)
+        | _::l' -> aux l' acc
+    in aux lis 0 ;;
 
+
+let aux_left acc x = if (x > 0) then acc + x else acc ;;
+let aux_right x acc =  if (x > 0) then acc + x else acc ;;
+
+let somma_positivi_right = List.fold_right aux_right lis 0 ;;
+let somma_positivi_left = List.fold_left aux_left 0 lis ;;
+
+let somma_positivilis = 
+    let rec somma_aux l acc = 
+        match l with
+        | [] -> acc
+        | x::l' -> if x > 0 then somma_aux l' (acc + x) else somma_aux l' acc
+    in somma_aux lis 0 ;;
 
