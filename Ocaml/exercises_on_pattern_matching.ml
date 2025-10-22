@@ -120,3 +120,24 @@ let somma_positivilis =
         | x::l' -> if x > 0 then somma_aux l' (acc + x) else somma_aux l' acc
     in somma_aux lis 0 ;;
 
+(* higher order functions *)
+let rec exists p lis = 
+    match lis with
+    | [] -> false
+    | x::l' -> if p x then true else exists p l' ;;
+
+
+let contais_zero lis = exists (fun x -> x = 0) lis ;;
+let contais_even lis = exists (fun x -> x mod 2 = 0) lis ;;
+
+(* tests the predicate p over each element of the list *)
+let rec forall p lis = 
+    match lis with
+    | [] -> true
+    | x::l' -> if p x then forall l' else false ;; 
+
+
+let rec filter p lis = 
+    match lis with
+    | [] -> []
+    | x::l' -> if p x then x :: filter p l' else filter p l' ;;
