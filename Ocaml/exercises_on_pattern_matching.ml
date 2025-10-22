@@ -141,3 +141,22 @@ let rec filter p lis =
     match lis with
     | [] -> []
     | x::l' -> if p x then x :: filter p l' else filter p l' ;;
+
+
+(* maximum and minimum of a list using fold_right*)
+let max_min lis =
+    (* (min, max) is our accumulator *)
+    let f x (min, max) = 
+        if x < min then (x; max)
+        else if x > max then (min; x) 
+        else (min; max)
+    in 
+    match lis with
+    | [] -> (0; 0)    
+    | x::l' -> fold_right f lis' (x; x) ;;
+    
+
+let rec fold_left f a lis = 
+    match lis with
+    | [] -> a
+    | x::l' -> fold_left (f a x) l' ;;
